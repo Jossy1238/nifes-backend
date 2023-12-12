@@ -12,7 +12,7 @@ const subscribeRouter = require("./routes/subscribeRouter")
 const app = express();
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:5173', 'https://nifes-alumni.netlify.app/', 'https://cron-job.org']
+const allowedOrigins = ['http://localhost:5173', 'https://nifes-alumni.netlify.app', 'https://cron-job.org']
 const corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
