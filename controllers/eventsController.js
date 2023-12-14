@@ -6,11 +6,13 @@ const User = require("../models/User");
 const createEvent = async (req, res)=>{
     try {
 
-        const {name, category, date, venue, description, createdBy} = req.body;
+        const {name, category, date, venue, time, speakers, description,  createdBy} = req.body;
+
+        console.log("EVENT", {name, category, date, venue, time, speakers, description,  createdBy})
 
         const image = req?.file?.filename;
 
-        if(!name || !category || !date || !venue || !description || !createdBy){
+        if(!name || !category || !date || !venue || !time ||!speakers || !description || !createdBy){
             return res.status(400).json({message: "Please fill all required fields"});
         }
 
@@ -26,6 +28,8 @@ const createEvent = async (req, res)=>{
                 category,
                 date,
                 venue,
+                time,
+                speakers,
                 description,
                 image,
                 createdBy
@@ -35,6 +39,7 @@ const createEvent = async (req, res)=>{
         await event.save();
 
         const populatedEvent = await Event.findById(event._id).populate("createdBy", "fullName");
+        
         res.status(201).json({
             message: "Event created successfully", 
             event: populatedEvent
@@ -60,7 +65,7 @@ const getAllEvents = async (req, res)=>{
 const updateEvent = async (req, res)=>{
     try {
         const {id} = req.params;
-        const {name, category, date, venue, description} = req.body;
+        const {name, category, date, venue, time, speakers, description } = req.body;
 
         const image = req?.file?.filename;
 
@@ -71,6 +76,8 @@ const updateEvent = async (req, res)=>{
                 category,
                 date,
                 venue,
+                time,
+                speakers,
                 description,
                 image,
             }, {new: true});
